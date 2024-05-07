@@ -1,0 +1,14 @@
+
+
+text resolution = 40x24
+
+LCM = 8 * 5 * 3 = 120
+
+canvas resolution = 1200x720
+
+side length = 360
+
+camera position = 0, 0, +720
+screen position = 0, 0, 0
+
+-180 to +180
