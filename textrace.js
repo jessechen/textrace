@@ -74,6 +74,12 @@ function traceRay(x, y) {
         return " ";
     }
 
+    const s_cross_e1 = s.cross(e1);
+    const v = inv_det * ray.dot(s_cross_e1);
+    if (v < 0 || u+v > 1) {
+        return " ";
+    }
+
     return "A";
 }
 
