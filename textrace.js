@@ -1,16 +1,12 @@
-class Point {
-    constructor(x, y, z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-}
-
 class Vector {
     constructor(x, y, z) {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    minus(other) {
+        return new Vector(this.x-other.x, this.y-other.y, this.z-other.z);
     }
 
     dot(other) {
@@ -38,7 +34,7 @@ class Vector {
     }
 }
 
-const cameraCoords = new Point(0, 0, 720);
+const cameraOrigin = new Vector(0, 0, 720);
 const buffer = new Array(24);
 
 for (let i = 0; i < 24; i++) {
@@ -48,7 +44,7 @@ for (let i = 0; i < 24; i++) {
 function calculateBuffer() {
     for (let i = 0; i < 24; i++) {
         for (let j = 0; j < 40; j++) {
-            buffer[i][j] = traceRay(i * 30, j * 30);
+            buffer[i][j] = traceRay(i * 30 - 360, j * 30 - 600);
         }
     }
 }
@@ -71,15 +67,21 @@ function traceRay(x, y) {
 
     // if yes, at what point?
     // is the point inside the polygon? return the result or space
+    const inv_det = 1/det;
+    const s = cameraOrigin.minus(new Vector(-180, -180, 180));
+    const u = inv_det * s.dot(ray_cross_e2);
+    if (u < 0 || u > 1) {
+        return " ";
+    }
 
     return "A";
 }
 
 function displayBuffer() {
     const screen = buffer.reduce((acc, line) => {
-        return acc + "\n" + line.join('');
+        return acc + line.join("") + "\n";
     }, "");
-    document.getElementById("main").textContent = screen;
+    document.getElementById("content").textContent = screen;
 }
 
 calculateBuffer();
