@@ -76,7 +76,7 @@ function traceRay(x, y) {
 
     const s_cross_e1 = s.cross(e1);
     const v = inv_det * ray.dot(s_cross_e1);
-    if (v < 0 || u+v > 1) {
+    if (v < 0 || v > 1 || u+v > 2) {
         return " ";
     }
 
